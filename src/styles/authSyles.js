@@ -1,12 +1,13 @@
 import { StyleSheet } from 'react-native';
 
 export const authStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f4f4f4',
+  /* Layout & Container */
+  container: { 
+    flex: 1, 
+    backgroundColor: '#f4f4f4' 
   },
-  keyboardView: {
-    flex: 1,
+  keyboardView: { 
+    flex: 1 
   },
   scrollContainer: {
     flexGrow: 1,
@@ -17,11 +18,11 @@ export const authStyles = StyleSheet.create({
   },
 
   /* Header Section */
-  headerContainer: {
-    alignItems: 'center',
-    marginTop: 20,
-    marginBottom: 24,
-    width: '100%',
+  headerContainer: { 
+    alignItems: 'center', 
+    marginTop: 20, 
+    marginBottom: 24, 
+    width: '100%' 
   },
   logoText: {
     fontSize: 56,
@@ -56,27 +57,27 @@ export const authStyles = StyleSheet.create({
     shadowRadius: 10,
     elevation: 4,
   },
-  cardTitle: {
-    fontSize: 26,
-    fontWeight: '700',
-    color: '#1a1a1a',
-    textAlign: 'center',
-    marginBottom: 20,
+  cardTitle: { 
+    fontSize: 26, 
+    fontWeight: '700', 
+    color: '#1a1a1a', 
+    textAlign: 'center', 
+    marginBottom: 20 
   },
 
-  /* Input Fields */
-  inputWrapper: {
-    position: 'relative',
-    marginBottom: 16,
+  /* Inputs & Grids */
+  inputWrapper: { 
+    position: 'relative', 
+    marginBottom: 16 
   },
-  inputRowContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-    marginBottom: 16,
+  inputRowContainer: { 
+    flexDirection: 'row', 
+    justifyContent: 'space-between', 
+    width: '100%', 
+    marginBottom: 16 
   },
-  inputHalfWrapper: {
-    width: '48%',
+  inputHalfWrapper: { 
+    width: '48%' 
   },
   input: {
     width: '100%',
@@ -89,14 +90,28 @@ export const authStyles = StyleSheet.create({
     color: '#333333',
     backgroundColor: '#ffffff',
   },
-  inputIcon: {
-    position: 'absolute',
-    right: 12,
-    top: 13,
+  inputIcon: { 
+    position: 'absolute', 
+    right: 12, 
+    top: 13 
   },
 
   /* Buttons & Action Links */
-  primaryButton: {
+  loginButton: {
+    backgroundColor: '#007aff',
+    borderRadius: 8,
+    height: 46,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  loginButtonText: { 
+    color: '#ffffff', 
+    fontSize: 16, 
+    fontWeight: '600', 
+    letterSpacing: 0.5 
+  },
+  signupButton: {
     backgroundColor: '#007aff',
     borderRadius: 8,
     height: 46,
@@ -105,43 +120,51 @@ export const authStyles = StyleSheet.create({
     marginBottom: 16,
     marginTop: 10,
   },
-  primaryButtonText: {
-    color: '#ffffff',
-    fontSize: 16,
-    fontWeight: '600',
-    letterSpacing: 0.5,
+  signupButtonText: { 
+    color: '#ffffff', 
+    fontSize: 16, 
+    fontWeight: '600', 
+    letterSpacing: 0.5 
   },
-  forgotContainer: {
-    alignSelf: 'flex-start',
-    marginBottom: 20,
+  forgotContainer: { 
+    alignSelf: 'flex-start', 
+    marginBottom: 20 
   },
-  linkText: {
-    color: '#007aff',
-    fontSize: 16,
-    fontWeight: '400',
+  linkText: { 
+    color: '#007aff', 
+    fontSize: 16, 
+    fontWeight: '400' 
   },
-  legalText: {
-    fontSize: 13,
-    color: '#1a1a1a',
-    textAlign: 'left',
-    lineHeight: 18,
-    marginBottom: 20,
+  legalText: { 
+    fontSize: 13, 
+    color: '#1a1a1a', 
+    textAlign: 'left', 
+    lineHeight: 18, 
+    marginBottom: 20 
   },
 
-  /* Account Prompt Section (Login / Signup Switch) */
-  promptContainer: {
-    alignItems: 'flex-start',
+  /* Switch Links (Login <-> Signup Prompt) */
+  signupContainer: { 
+    alignItems: 'flex-start' 
   },
-  promptText: {
-    fontSize: 16,
-    color: '#1a1a1a',
-    marginBottom: 6,
+  noAccountText: { 
+    fontSize: 16, 
+    color: '#1a1a1a', 
+    marginBottom: 6 
   },
-  /* authStyles.js */
-  promptTouch: {
-    marginTop: 4,
-    paddingVertical: 8,
-    paddingRight: 20, // Expands hit box to the right
+  signupTouch: { 
+    marginTop: 2 
+  },
+  loginPromptContainer: { 
+    alignItems: 'flex-start' 
+  },
+  alreadyAccountText: { 
+    fontSize: 16, 
+    color: '#1a1a1a', 
+    marginBottom: 6 
+  },
+  loginTouch: { 
+    marginTop: 2 
   },
 
   /* Footer Section */
@@ -153,13 +176,13 @@ export const authStyles = StyleSheet.create({
     marginTop: 30,
     paddingBottom: 10,
   },
-  footerLink: {
-    color: '#007aff',
-    fontSize: 13,
+  footerLink: { 
+    color: '#007aff', 
+    fontSize: 13 
   },
-  footerDivider: {
-    color: '#007aff',
-    fontSize: 13,
-    marginHorizontal: 6,
+  footerDivider: { 
+    color: '#007aff', 
+    fontSize: 13, 
+    marginHorizontal: 6 
   },
 });
