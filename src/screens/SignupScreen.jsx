@@ -1,6 +1,3 @@
-console.log('================ LOGIN SCREEN LOADED ================');
-
-import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
 import {
   KeyboardAvoidingView,
@@ -15,12 +12,19 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { authStyles as styles } from './styles/authStyles';
 
-export default function LoginScreen({ navigation }) {
+export default function SignupScreen({ navigation }) {
+  const [firstName, setFirstName] = useState('');
+  const [surname, setSurname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleLogin = () => {
-    console.log('Logging in with:', email, password);
+  const handleSignup = () => {
+    if (password !== confirmPassword) {
+      console.log('Passwords do not match');
+      return;
+    }
+    console.log('Signing up with:', firstName, surname, email, password);
   };
 
   return (
@@ -43,9 +47,31 @@ export default function LoginScreen({ navigation }) {
             </Text>
           </View>
 
-          {/* Login Card */}
+          {/* Signup Card */}
           <View style={styles.card}>
-            <Text style={styles.cardTitle}>Login</Text>
+            <Text style={styles.cardTitle}>Signup</Text>
+
+            {/* Name Row */}
+            <View style={styles.inputRowContainer}>
+              <View style={styles.inputHalfWrapper}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="First Name"
+                  placeholderTextColor="#8e8e93"
+                  value={firstName}
+                  onChangeText={setFirstName}
+                />
+              </View>
+              <View style={styles.inputHalfWrapper}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Surname"
+                  placeholderTextColor="#8e8e93"
+                  value={surname}
+                  onChangeText={setSurname}
+                />
+              </View>
+            </View>
 
             {/* Email Input */}
             <View style={styles.inputWrapper}>
@@ -57,12 +83,6 @@ export default function LoginScreen({ navigation }) {
                 onChangeText={setEmail}
                 keyboardType="email-address"
                 autoCapitalize="none"
-              />
-              <Ionicons
-                name="scan-outline"
-                size={22}
-                color="#333"
-                style={styles.inputIcon}
               />
             </View>
 
@@ -78,30 +98,43 @@ export default function LoginScreen({ navigation }) {
               />
             </View>
 
-            {/* Forgotten Password Link */}
-            <TouchableOpacity style={styles.forgotContainer} activeOpacity={0.7}>
-              <Text style={styles.linkText}>Forgotten your password?</Text>
-            </TouchableOpacity>
+            {/* Confirm Password Input */}
+            <View style={styles.inputWrapper}>
+              <TextInput
+                style={styles.input}
+                placeholder="Confirm Password"
+                placeholderTextColor="#8e8e93"
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+                secureTextEntry
+              />
+            </View>
 
-            {/* Login Button */}
+            {/* Signup Button */}
             <TouchableOpacity
               style={styles.primaryButton}
-              onPress={handleLogin}
+              onPress={handleSignup}
               activeOpacity={0.8}
             >
-              <Text style={styles.primaryButtonText}>LOGIN</Text>
+              <Text style={styles.primaryButtonText}>SIGNUP</Text>
             </TouchableOpacity>
 
-            {/* Signup Link Section */}
+            {/* Legal Text */}
+            <Text style={styles.legalText}>
+              By signing up, you agree to receive transactional emails from us.
+              You can unsubscribe at any time.
+            </Text>
+
+            {/* Login Link Section */}
             <View style={styles.promptContainer}>
-              <Text style={styles.promptText}>Don't have an account?</Text>
+              <Text style={styles.promptText}>Already Have an Account?</Text>
               <TouchableOpacity
                 activeOpacity={0.7}
                 style={styles.promptTouch}
                 hitSlop={{ top: 15, bottom: 15, left: 15, right: 15 }}
-                onPress={() => navigation.navigate('Signup')}
+                onPress={() => navigation.navigate('Login')}
               >
-                <Text style={styles.linkText}>Signup</Text>
+                <Text style={styles.linkText}>Login</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -124,4 +157,4 @@ export default function LoginScreen({ navigation }) {
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
-}
+}s

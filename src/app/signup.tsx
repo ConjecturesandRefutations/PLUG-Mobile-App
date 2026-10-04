@@ -1,24 +1,30 @@
-import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useState } from 'react';
 import {
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
+    KeyboardAvoidingView,
+    Platform,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-export default function LoginScreen() {
+export default function SignupScreen() {
+  const [firstName, setFirstName] = useState('');
+  const [surname, setSurname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleLogin = () => {
-    console.log('Logging in with:', email, password);
+  const handleSignup = () => {
+    if (password !== confirmPassword) {
+      console.log('Passwords do not match');
+      return;
+    }
+    console.log('Signing up with:', firstName, surname, email, password);
   };
 
   return (
@@ -40,9 +46,31 @@ export default function LoginScreen() {
             </Text>
           </View>
 
-          {/* Login Card */}
+          {/* Signup Card */}
           <View style={styles.card}>
-            <Text style={styles.cardTitle}>Login</Text>
+            <Text style={styles.cardTitle}>Signup</Text>
+
+            {/* Name Row */}
+            <View style={styles.inputRowContainer}>
+              <View style={styles.inputHalfWrapper}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="First Name"
+                  placeholderTextColor="#8e8e93"
+                  value={firstName}
+                  onChangeText={setFirstName}
+                />
+              </View>
+              <View style={styles.inputHalfWrapper}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="surname"
+                  placeholderTextColor="#8e8e93"
+                  value={surname}
+                  onChangeText={setSurname}
+                />
+              </View>
+            </View>
 
             {/* Email Input */}
             <View style={styles.inputWrapper}>
@@ -54,12 +82,6 @@ export default function LoginScreen() {
                 onChangeText={setEmail}
                 keyboardType="email-address"
                 autoCapitalize="none"
-              />
-              <Ionicons
-                name="scan-outline"
-                size={22}
-                color="#333"
-                style={styles.inputIcon}
               />
             </View>
 
@@ -75,30 +97,43 @@ export default function LoginScreen() {
               />
             </View>
 
-            {/* Forgotten Password Link */}
-            <TouchableOpacity style={styles.forgotContainer} activeOpacity={0.7}>
-              <Text style={styles.linkText}>Forgotten your password?</Text>
-            </TouchableOpacity>
+            {/* Confirm Password Input */}
+            <View style={styles.inputWrapper}>
+              <TextInput
+                style={styles.input}
+                placeholder="confirm password"
+                placeholderTextColor="#8e8e93"
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+                secureTextEntry
+              />
+            </View>
 
-            {/* Login Button */}
+            {/* Signup Button */}
             <TouchableOpacity
-              style={styles.loginButton}
-              onPress={handleLogin}
+              style={styles.signupButton}
+              onPress={handleSignup}
               activeOpacity={0.8}
             >
-              <Text style={styles.loginButtonText}>LOGIN</Text>
+              <Text style={styles.signupButtonText}>SIGNUP</Text>
             </TouchableOpacity>
 
-            {/* Signup Link Section */}
-            <View style={styles.signupContainer}>
-              <Text style={styles.noAccountText}>Don't have an account?</Text>
+            {/* Legal Text */}
+            <Text style={styles.legalText}>
+              By signing up, you agree to receive transactional emails from us.
+              You can unsubscribe at any time.
+            </Text>
+
+            {/* Login Link Section */}
+            <View style={styles.loginPromptContainer}>
+              <Text style={styles.alreadyAccountText}>Already Have an Account?</Text>
               <TouchableOpacity
                 activeOpacity={0.7}
-                style={styles.signupTouch}
+                style={styles.loginTouch}
                 hitSlop={{ top: 15, bottom: 15, left: 15, right: 15 }}
-                onPress={() => router.push('/signup')}
+                onPress={() => router.push('/')}
               >
-                <Text style={styles.linkText}>Signup</Text>
+                <Text style={styles.linkText}>Login</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -166,7 +201,9 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   cardTitle: { fontSize: 26, fontWeight: '700', color: '#1a1a1a', textAlign: 'center', marginBottom: 20 },
-  inputWrapper: { position: 'relative', marginBottom: 16 },
+  inputRowContainer: { flexDirection: 'row', justifyContent: 'space-between', width: '100%', marginBottom: 16 },
+  inputHalfWrapper: { width: '48%' },
+  inputWrapper: { marginBottom: 16 },
   input: {
     width: '100%',
     height: 48,
@@ -178,21 +215,21 @@ const styles = StyleSheet.create({
     color: '#333333',
     backgroundColor: '#ffffff',
   },
-  inputIcon: { position: 'absolute', right: 12, top: 13 },
-  forgotContainer: { alignSelf: 'flex-start', marginBottom: 20 },
-  linkText: { color: '#007aff', fontSize: 16, fontWeight: '400' },
-  loginButton: {
+  signupButton: {
     backgroundColor: '#007aff',
     borderRadius: 8,
     height: 46,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 16,
+    marginTop: 10,
   },
-  loginButtonText: { color: '#ffffff', fontSize: 16, fontWeight: '600', letterSpacing: 0.5 },
-  signupContainer: { alignItems: 'flex-start' },
-  noAccountText: { fontSize: 16, color: '#1a1a1a', marginBottom: 6 },
-  signupTouch: { marginTop: 2 },
+  signupButtonText: { color: '#ffffff', fontSize: 16, fontWeight: '600', letterSpacing: 0.5 },
+  legalText: { fontSize: 13, color: '#1a1a1a', textAlign: 'left', lineHeight: 18, marginBottom: 20 },
+  loginPromptContainer: { alignItems: 'flex-start' },
+  alreadyAccountText: { fontSize: 16, color: '#1a1a1a', marginBottom: 6 },
+  loginTouch: { marginTop: 2 },
+  linkText: { color: '#007aff', fontSize: 16, fontWeight: '400' },
   footerContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
