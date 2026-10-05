@@ -1,16 +1,19 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
 import {
-    KeyboardAvoidingView,
-    Platform,
-    ScrollView,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View
+  ActivityIndicator,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { authStyles as styles } from '../styles/authSyles';
+import { API_BASE_URL } from '../constants/api';
+import { authStyles as styles } from '../styles/authStyles';
 
 export default function SignupScreen() {
   const [firstName, setFirstName] = useState('');
@@ -18,14 +21,65 @@ export default function SignupScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSignup = () => {
-    if (password !== confirmPassword) {
-      console.log('Passwords do not match');
-      return;
+const handleSignup = async () => {
+  // Client validations...
+  if (!firstName.trim() || !surname.trim() || !email.trim() || !password) {
+    Alert.alert('Required Fields', 'Please fill in all required fields.');
+    return;
+  }
+
+  if (password !== confirmPassword) {
+    Alert.alert('Password Mismatch', 'Passwords do not match.');
+    return;
+  }
+
+  setIsLoading(true);
+
+  try {
+    // Point to your API endpoint
+    const response = await fetch(`${API_BASE_URL}/authentication/api_signup.php`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({
+        first_name: firstName.trim(),
+        surname: surname.trim(),
+        email: email.trim().toLowerCase(),
+        password: password,
+        password_confirmation: confirmPassword,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok && data.success) {
+      Alert.alert(
+        'Success',
+        data.message,
+        [
+          {
+            text: 'OK',
+            onPress: () => router.push('/'), // Redirect to Login page
+          },
+        ]
+      );
+    } else {
+      Alert.alert('Signup Failed', data.message || 'Unable to create account.');
     }
-    console.log('Signing up with:', firstName, surname, email, password);
-  };
+  } catch (error) {
+    console.error('Signup network error:', error);
+    Alert.alert(
+      'Connection Error',
+      'Could not connect to server. Check your network or server URL.'
+    );
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   return (
     <SafeAreaView style={styles.container}>
@@ -55,10 +109,11 @@ export default function SignupScreen() {
               <View style={styles.inputHalfWrapper}>
                 <TextInput
                   style={styles.input}
-                  placeholder="First Name"
+                  placeholder="first name"
                   placeholderTextColor="#8e8e93"
                   value={firstName}
                   onChangeText={setFirstName}
+                  editable={!isLoading}
                 />
               </View>
               <View style={styles.inputHalfWrapper}>
@@ -68,6 +123,7 @@ export default function SignupScreen() {
                   placeholderTextColor="#8e8e93"
                   value={surname}
                   onChangeText={setSurname}
+                  editable={!isLoading}
                 />
               </View>
             </View>
@@ -82,6 +138,7 @@ export default function SignupScreen() {
                 onChangeText={setEmail}
                 keyboardType="email-address"
                 autoCapitalize="none"
+                editable={!isLoading}
               />
             </View>
 
@@ -94,6 +151,7 @@ export default function SignupScreen() {
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry
+                editable={!isLoading}
               />
             </View>
 
@@ -106,6 +164,7 @@ export default function SignupScreen() {
                 value={confirmPassword}
                 onChangeText={setConfirmPassword}
                 secureTextEntry
+                editable={!isLoading}
               />
             </View>
 
@@ -114,8 +173,13 @@ export default function SignupScreen() {
               style={styles.signupButton}
               onPress={handleSignup}
               activeOpacity={0.8}
+              disabled={isLoading}
             >
-              <Text style={styles.signupButtonText}>SIGNUP</Text>
+              {isLoading ? (
+                <ActivityIndicator color="#ffffff" />
+              ) : (
+                <Text style={styles.signupButtonText}>SIGNUP</Text>
+              )}
             </TouchableOpacity>
 
             {/* Legal Text */}
@@ -132,6 +196,7 @@ export default function SignupScreen() {
                 style={styles.loginTouch}
                 hitSlop={{ top: 15, bottom: 15, left: 15, right: 15 }}
                 onPress={() => router.push('/')}
+                disabled={isLoading}
               >
                 <Text style={styles.linkText}>Login</Text>
               </TouchableOpacity>
@@ -157,4 +222,3 @@ export default function SignupScreen() {
     </SafeAreaView>
   );
 }
-
