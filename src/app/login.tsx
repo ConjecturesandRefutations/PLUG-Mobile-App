@@ -14,6 +14,7 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Footer from '../components/footer';
 import { API_BASE_URL } from '../constants/api';
 import { authStyles as styles } from '../styles/authStyles';
 
@@ -167,19 +168,7 @@ export default function LoginScreen() {
           </View>
 
           {/* Footer Section */}
-          <View style={styles.footerContainer}>
-            <TouchableOpacity activeOpacity={0.7}>
-              <Text style={styles.footerLink}>Privacy Policy</Text>
-            </TouchableOpacity>
-            <Text style={styles.footerDivider}>|</Text>
-            <TouchableOpacity activeOpacity={0.7}>
-              <Text style={styles.footerLink}>Terms & Conditions</Text>
-            </TouchableOpacity>
-            <Text style={styles.footerDivider}>|</Text>
-            <TouchableOpacity activeOpacity={0.7}>
-              <Text style={styles.footerLink}>Site by Alfie Collins</Text>
-            </TouchableOpacity>
-          </View>
+          <Footer />
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>

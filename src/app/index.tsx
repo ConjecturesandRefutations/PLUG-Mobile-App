@@ -3,6 +3,7 @@ import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Footer from '../components/footer';
 
 export default function FeedScreen() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
@@ -49,6 +50,8 @@ export default function FeedScreen() {
       <View style={styles.content}>
         <Text style={styles.welcomeText}>Welcome to your main feed!</Text>
       </View>
+      {/* Footer Section */}
+      <Footer />      
     </SafeAreaView>
   );
 }
