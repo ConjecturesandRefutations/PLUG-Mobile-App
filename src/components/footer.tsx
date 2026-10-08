@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
+import { footerStyles as styles } from '../styles/footerStyles';
 
 export default function Footer() {
   return (
@@ -11,30 +12,6 @@ export default function Footer() {
       <TouchableOpacity activeOpacity={0.7}>
         <Text style={styles.footerLink}>Terms & Conditions</Text>
       </TouchableOpacity>
-      <Text style={styles.footerDivider}>|</Text>
-      <TouchableOpacity activeOpacity={0.7}>
-        <Text style={styles.footerLink}>Site by Alfie Collins</Text>
-      </TouchableOpacity>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  footerContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 30,
-    paddingBottom: 10,
-  },
-  footerLink: {
-    color: '#007aff',
-    fontSize: 13,
-  },
-  footerDivider: {
-    color: '#007aff',
-    fontSize: 13,
-    marginHorizontal: 6,
-  },
-});

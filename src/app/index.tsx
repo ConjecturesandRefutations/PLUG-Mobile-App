@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Footer from '../components/footer';
+import Header from '../components/header';
 
 export default function FeedScreen() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
@@ -41,6 +42,8 @@ export default function FeedScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
+      {/* Top Header */}
+      <Header />
       <View style={styles.header}>
         <Text style={styles.title}>PLUG Feed</Text>
         <TouchableOpacity onPress={handleLogout}>
