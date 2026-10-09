@@ -1,5 +1,4 @@
 import { Ionicons } from '@expo/vector-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 import { useState } from 'react';
 import {
@@ -16,9 +15,11 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Footer from '../components/footer';
 import { API_BASE_URL } from '../constants/api';
+import { useAuth } from '../context/authContext';
 import { authStyles as styles } from '../styles/authStyles';
 
 export default function LoginScreen() {
+  const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -45,17 +46,15 @@ export default function LoginScreen() {
         }),
       });
 
-      // Read raw text first to inspect non-JSON server output
       const rawText = await response.text();
       console.log('=== RAW SERVER RESPONSE ===');
       console.log(rawText);
 
-      // Parse JSON manually
       const data = JSON.parse(rawText);
 
       if (response.ok && data.success) {
-        // Save session data so index.tsx can verify authentication
-        await AsyncStorage.setItem('userSession', JSON.stringify(data.data));
+        // Updates AuthContext state AND saves session to SecureStore
+        await login(data.data);
 
         // Navigate to main feed
         router.replace('/');

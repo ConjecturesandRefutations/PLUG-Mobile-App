@@ -70,19 +70,39 @@ export default function Header() {
         <View style={styles.overlayContainer}>
           {/* Left Menu Drawer */}
           <View style={styles.drawerContainer}>
-            <TouchableOpacity style={[styles.menuButton, styles.homeButton]} activeOpacity={0.8}>
+            <TouchableOpacity style={[styles.menuButton, styles.homeButton]} 
+            activeOpacity={0.8}
+            onPress={() => {
+                setIsMenuOpen(false);
+                router.push('/');
+              }}>
               <Text style={styles.menuButtonText}>HOME</Text>
             </TouchableOpacity>
-
-            <TouchableOpacity style={[styles.menuButton, styles.profileButton]} activeOpacity={0.8}>
+            
+            <TouchableOpacity
+              style={[styles.menuButton, styles.profileButton]}
+              activeOpacity={0.8}
+              onPress={() => {
+                setIsMenuOpen(false);
+                router.push('/profile');
+              }}
+            >
               <Text style={styles.menuButtonText}>PROFILE</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={[styles.menuButton, styles.usersButton]} activeOpacity={0.8}>
+            <TouchableOpacity style={[styles.menuButton, styles.usersButton]} activeOpacity={0.8}
+            onPress={() => {
+                setIsMenuOpen(false);
+                router.push('/users');
+              }}>
               <Text style={styles.menuButtonText}>USERS</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={[styles.menuButton, styles.blogsButton]} activeOpacity={0.8}>
+            <TouchableOpacity style={[styles.menuButton, styles.blogsButton]} 
+            onPress={() => {
+                setIsMenuOpen(false);
+                router.push('/blogs');
+              }}activeOpacity={0.8}>
               <Text style={styles.menuButtonText}>BLOGS</Text>
             </TouchableOpacity>
 
