@@ -27,7 +27,7 @@ container: {
   },
   userNameText: {
     fontSize: 36,
-    fontWeight: '300',
+    fontWeight: '400',
     color: '#333333',
     lineHeight: 42,
     marginBottom: 12,
@@ -63,8 +63,8 @@ container: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 36,
-    borderRadius: 8,
+    height: 30,
+    borderRadius: 5,
     marginBottom: 8,
     paddingHorizontal: 12,
   },
@@ -120,7 +120,7 @@ container: {
   },
   sectionTitle: {
     fontSize: 28,
-    fontWeight: '400',
+    fontWeight: '300',
     color: '#333333',
     textAlign: 'center',
     marginBottom: 20,
@@ -158,9 +158,10 @@ container: {
     marginTop: 10,
   },
   emptyBlogsText: {
-    fontSize: 20,
+    fontSize: 18,
     color: '#444444',
     textAlign: 'center',
+    fontWeight: 300,
   },
 
   /* Footer Placement */
