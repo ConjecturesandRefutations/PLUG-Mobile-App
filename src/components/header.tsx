@@ -74,7 +74,7 @@ export default function Header() {
             activeOpacity={0.8}
             onPress={() => {
                 setIsMenuOpen(false);
-                router.push('/');
+                router.navigate('/');
               }}>
               <Text style={styles.menuButtonText}>HOME</Text>
             </TouchableOpacity>
@@ -84,7 +84,7 @@ export default function Header() {
               activeOpacity={0.8}
               onPress={() => {
                 setIsMenuOpen(false);
-                router.push('/profile');
+                router.navigate('/profile');
               }}
             >
               <Text style={styles.menuButtonText}>PROFILE</Text>
@@ -93,7 +93,7 @@ export default function Header() {
             <TouchableOpacity style={[styles.menuButton, styles.usersButton]} activeOpacity={0.8}
             onPress={() => {
                 setIsMenuOpen(false);
-                router.push('/users');
+                router.navigate('/users');
               }}>
               <Text style={styles.menuButtonText}>USERS</Text>
             </TouchableOpacity>
@@ -101,7 +101,7 @@ export default function Header() {
             <TouchableOpacity style={[styles.menuButton, styles.blogsButton]} 
             onPress={() => {
                 setIsMenuOpen(false);
-                router.push('/blogs');
+                router.navigate('/blogs');
               }}activeOpacity={0.8}>
               <Text style={styles.menuButtonText}>BLOGS</Text>
             </TouchableOpacity>

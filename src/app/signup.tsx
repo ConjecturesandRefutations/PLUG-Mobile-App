@@ -12,7 +12,6 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Footer from '../components/footer';
 import { API_BASE_URL } from '../constants/api';
 import { authStyles as styles } from '../styles/authStyles';
 
@@ -204,8 +203,6 @@ const handleSignup = async () => {
             </View>
           </View>
 
-          {/* Footer Section */}
-          <Footer />
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>

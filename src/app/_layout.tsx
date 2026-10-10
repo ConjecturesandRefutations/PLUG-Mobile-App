@@ -1,38 +1,56 @@
 import { Slot, useRouter, useSegments } from 'expo-router';
 import { useEffect } from 'react';
-import { ActivityIndicator, View } from 'react-native';
-import { AuthProvider, useAuth } from '../context/authContext';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
+import { AuthProvider, useAuth } from '../context/AuthContext';
 
 function RootLayoutNav() {
   const { user, isLoading } = useAuth();
   const segments = useSegments();
   const router = useRouter();
 
+  const currentRoute = segments[0];
+  const isAuthRoute = currentRoute === 'login' || currentRoute === 'signup';
+
   useEffect(() => {
     if (isLoading) return;
 
-    // Check if current screen is inside the auth group ('login' or 'signup')
-    const currentRoute = segments[0];
-    const isAuthRoute = currentRoute === 'login' || currentRoute === 'signup';
-
     if (!user && !isAuthRoute) {
-      // User is logged out and trying to access a protected screen -> Redirect to login
       router.replace('/login' as any);
     } else if (user && isAuthRoute) {
-      // User is logged in and trying to access login/signup -> Redirect to feed
       router.replace('/');
     }
   }, [user, isLoading, segments]);
 
   if (isLoading) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#007aff" />
       </View>
     );
   }
 
-  return <Slot />;
+  return (
+    <View style={styles.container}>
+      {/* Top Header */}
+      {!isAuthRoute && (
+        <SafeAreaView edges={['top']} style={styles.headerSafeArea}>
+          <Header />
+        </SafeAreaView>
+      )}
+
+      {/* Main Page Content */}
+      <View style={styles.content}>
+        <Slot />
+      </View>
+
+        <SafeAreaView edges={['bottom']} style={styles.footerSafeArea}>
+          <Footer />
+        </SafeAreaView>
+    </View>
+  );
 }
 
 export default function RootLayout() {
@@ -42,3 +60,27 @@ export default function RootLayout() {
     </AuthProvider>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#ffffff',
+  },
+  headerSafeArea: {
+    backgroundColor: '#ffffff',
+    zIndex: 1000,
+    elevation: 1000,
+  },
+  content: {
+    flex: 1,
+    zIndex: 1,
+  },
+  footerSafeArea: {
+    backgroundColor: '#ffffff',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
