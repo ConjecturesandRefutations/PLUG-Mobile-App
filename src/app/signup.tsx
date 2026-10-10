@@ -12,6 +12,7 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Footer from '../components/Footer';
 import { API_BASE_URL } from '../constants/api';
 import { authStyles as styles } from '../styles/authStyles';
 
@@ -23,72 +24,72 @@ export default function SignupScreen() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-const handleSignup = async () => {
-  // Client validations...
-  if (!firstName.trim() || !surname.trim() || !email.trim() || !password) {
-    Alert.alert('Required Fields', 'Please fill in all required fields.');
-    return;
-  }
+  const handleSignup = async () => {
+    if (!firstName.trim() || !surname.trim() || !email.trim() || !password) {
+      Alert.alert('Required Fields', 'Please fill in all required fields.');
+      return;
+    }
 
-  if (password !== confirmPassword) {
-    Alert.alert('Password Mismatch', 'Passwords do not match.');
-    return;
-  }
+    if (password !== confirmPassword) {
+      Alert.alert('Password Mismatch', 'Passwords do not match.');
+      return;
+    }
 
-  setIsLoading(true);
+    setIsLoading(true);
 
-  try {
-    // Point to your API endpoint
-    const response = await fetch(`${API_BASE_URL}/authentication/api_signup.php`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-      body: JSON.stringify({
-        first_name: firstName.trim(),
-        surname: surname.trim(),
-        email: email.trim().toLowerCase(),
-        password: password,
-        password_confirmation: confirmPassword,
-      }),
-    });
+    try {
+      const response = await fetch(`${API_BASE_URL}/authentication/api_signup.php`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          first_name: firstName.trim(),
+          surname: surname.trim(),
+          email: email.trim().toLowerCase(),
+          password: password,
+          password_confirmation: confirmPassword,
+        }),
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (response.ok && data.success) {
-      Alert.alert(
-        'Success',
-        data.message,
-        [
+      if (response.ok && data.success) {
+        Alert.alert('Success', data.message, [
           {
             text: 'OK',
-            onPress: () => router.push('/'), // Redirect to Login page
+            onPress: () => router.push('/'),
           },
-        ]
+        ]);
+      } else {
+        Alert.alert('Signup Failed', data.message || 'Unable to create account.');
+      }
+    } catch (error) {
+      console.error('Signup network error:', error);
+      Alert.alert(
+        'Connection Error',
+        'Could not connect to server. Check your network or server URL.'
       );
-    } else {
-      Alert.alert('Signup Failed', data.message || 'Unable to create account.');
+    } finally {
+      setIsLoading(false);
     }
-  } catch (error) {
-    console.error('Signup network error:', error);
-    Alert.alert(
-      'Connection Error',
-      'Could not connect to server. Check your network or server URL.'
-    );
-  } finally {
-    setIsLoading(false);
-  }
-};
+  };
 
   return (
-    <SafeAreaView style={styles.container}>
+    /* 1. Restrict edges to top, left, right to prevent double bottom-inset calculation with the Footer layout */
+    <SafeAreaView style={[styles.container, { flex: 1 }]} edges={['top', 'left', 'right']}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        style={styles.keyboardView}
+        style={[styles.keyboardView, { flex: 1 }]}
       >
         <ScrollView
-          contentContainerStyle={styles.scrollContainer}
+          style={{ flex: 1 }}
+          /* 2. flexGrow ensures the full height is utilized while enabling scrolling when form height exceeds screen space */
+          contentContainerStyle={[
+            styles.scrollContainer,
+            { flexGrow: 1, justifyContent: 'center' },
+          ]}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
         >
@@ -202,7 +203,9 @@ const handleSignup = async () => {
               </TouchableOpacity>
             </View>
           </View>
-
+          <SafeAreaView edges={['bottom']}>
+            <Footer />
+          </SafeAreaView>
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>

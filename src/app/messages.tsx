@@ -1,21 +1,21 @@
 import { Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Footer from '../components/Footer';
-import { allUsersStyles as styles } from '../styles/allUsersStyles';
+import { allBlogsStyles as styles } from '../styles/allBlogsStyles';
 
 export default function ProfileScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>All Users</Text>
+        <Text style={styles.title}>Messages</Text>
       </View>
       <View style={styles.content}>
-        <Text style={styles.welcomeText}>Browse all users</Text>
+        <Text style={styles.welcomeText}>Your Conversations</Text>
       </View>
       <SafeAreaView edges={['bottom']}>
           <Footer />
-      </SafeAreaView>    
+      </SafeAreaView>   
     </SafeAreaView>
   );
 }

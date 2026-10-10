@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 export const allUsersStyles = StyleSheet.create({
   loadingContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  container: { flex: 1, backgroundColor: '#ffffff' },
+  container: { flex: 1, backgroundColor: '#F7F6F4' },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',

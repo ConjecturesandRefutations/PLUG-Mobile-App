@@ -13,6 +13,7 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Footer from '../components/Footer';
 import { API_BASE_URL } from '../constants/api';
 import { useAuth } from '../context/AuthContext';
 import { authStyles as styles } from '../styles/authStyles';
@@ -24,7 +25,6 @@ export default function LoginScreen() {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = async () => {
-    // 1. Validation
     if (!email.trim() || !password) {
       Alert.alert('Required Fields', 'Please enter both email and password.');
       return;
@@ -52,10 +52,7 @@ export default function LoginScreen() {
       const data = JSON.parse(rawText);
 
       if (response.ok && data.success) {
-        // Updates AuthContext state AND saves session to SecureStore
         await login(data.data);
-
-        // Navigate to main feed
         router.replace('/');
       } else {
         Alert.alert('Login Failed', data.message || 'Invalid email or password.');
@@ -72,13 +69,19 @@ export default function LoginScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    /* 1. Restrict edges to top, left, right so bottom safe area is handled solely by the Footer layout */
+    <SafeAreaView style={[styles.container, { flex: 1 }]} edges={['top', 'left', 'right']}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        style={styles.keyboardView}
+        style={[styles.keyboardView, { flex: 1 }]}
       >
         <ScrollView
-          contentContainerStyle={styles.scrollContainer}
+          style={{ flex: 1 }}
+          /* 2. flexGrow ensures full utilization of available height while enabling scrolling if needed */
+          contentContainerStyle={[
+            styles.scrollContainer,
+            { flexGrow: 1, justifyContent: 'center' },
+          ]}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
         >
@@ -164,6 +167,9 @@ export default function LoginScreen() {
               </TouchableOpacity>
             </View>
           </View>
+          <SafeAreaView edges={['bottom']}>
+            <Footer />
+          </SafeAreaView>
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>

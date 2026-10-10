@@ -4,7 +4,8 @@ export const authStyles = StyleSheet.create({
   /* Layout & Container */
   container: { 
     flex: 1, 
-    backgroundColor: '#f4f4f4' 
+    backgroundColor: '#F7F6F4',
+     
   },
   keyboardView: { 
     flex: 1 

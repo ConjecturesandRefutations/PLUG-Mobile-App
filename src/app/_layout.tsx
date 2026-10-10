@@ -2,7 +2,6 @@ import { Slot, useRouter, useSegments } from 'expo-router';
 import { useEffect } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { AuthProvider, useAuth } from '../context/AuthContext';
 
@@ -46,9 +45,6 @@ function RootLayoutNav() {
         <Slot />
       </View>
 
-        <SafeAreaView edges={['bottom']} style={styles.footerSafeArea}>
-          <Footer />
-        </SafeAreaView>
     </View>
   );
 }
@@ -76,7 +72,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   footerSafeArea: {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#F7F6F4',
   },
   loadingContainer: {
     flex: 1,

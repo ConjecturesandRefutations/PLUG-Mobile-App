@@ -1,6 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import * as SecureStore from 'expo-secure-store';
 import React, { useState } from 'react';
 import {
   Alert,
@@ -9,10 +8,12 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
+import { useAuth } from '../context/AuthContext'; // 1. Import useAuth
 import { headerStyles as styles } from '../styles/headerStyles';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { logout } = useAuth(); // 2. Destructure logout function
 
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
@@ -21,9 +22,8 @@ export default function Header() {
   const handleLogout = async () => {
     try {
       setIsMenuOpen(false);
-      // Remove saved user session from device storage
-      await SecureStore.deleteItemAsync('user_session');
-      // Redirect to login screen
+      // 3. Call AuthContext logout (clears SecureStore AND sets user to null)
+      await logout();
       router.replace('/login');
     } catch (error) {
       console.error('Error logging out:', error);
@@ -36,7 +36,11 @@ export default function Header() {
       {/* Header Bar */}
       <View style={styles.headerContainer}>
         {/* Brand Logo */}
-        <TouchableOpacity activeOpacity={0.8}>
+        <TouchableOpacity activeOpacity={0.8}
+          onPress={() => {
+          setIsMenuOpen(false);
+          router.navigate('/');
+              }}>
           <Text style={styles.logoText}>PLUG</Text>
         </TouchableOpacity>
 
@@ -70,15 +74,17 @@ export default function Header() {
         <View style={styles.overlayContainer}>
           {/* Left Menu Drawer */}
           <View style={styles.drawerContainer}>
-            <TouchableOpacity style={[styles.menuButton, styles.homeButton]} 
-            activeOpacity={0.8}
-            onPress={() => {
+            <TouchableOpacity
+              style={[styles.menuButton, styles.homeButton]}
+              activeOpacity={0.8}
+              onPress={() => {
                 setIsMenuOpen(false);
                 router.navigate('/');
-              }}>
+              }}
+            >
               <Text style={styles.menuButtonText}>HOME</Text>
             </TouchableOpacity>
-            
+
             <TouchableOpacity
               style={[styles.menuButton, styles.profileButton]}
               activeOpacity={0.8}
@@ -90,19 +96,25 @@ export default function Header() {
               <Text style={styles.menuButtonText}>PROFILE</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={[styles.menuButton, styles.usersButton]} activeOpacity={0.8}
-            onPress={() => {
+            <TouchableOpacity
+              style={[styles.menuButton, styles.usersButton]}
+              activeOpacity={0.8}
+              onPress={() => {
                 setIsMenuOpen(false);
                 router.navigate('/users');
-              }}>
+              }}
+            >
               <Text style={styles.menuButtonText}>USERS</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={[styles.menuButton, styles.blogsButton]} 
-            onPress={() => {
+            <TouchableOpacity
+              style={[styles.menuButton, styles.blogsButton]}
+              activeOpacity={0.8}
+              onPress={() => {
                 setIsMenuOpen(false);
                 router.navigate('/blogs');
-              }}activeOpacity={0.8}>
+              }}
+            >
               <Text style={styles.menuButtonText}>BLOGS</Text>
             </TouchableOpacity>
 
@@ -116,7 +128,7 @@ export default function Header() {
             </TouchableOpacity>
           </View>
 
-          {/* Right Outside Backdrop (Clicking closes menu) */}
+          {/* Right Outside Backdrop */}
           <TouchableWithoutFeedback onPress={() => setIsMenuOpen(false)}>
             <View style={styles.backdrop} />
           </TouchableWithoutFeedback>

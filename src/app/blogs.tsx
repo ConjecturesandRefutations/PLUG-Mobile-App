@@ -1,5 +1,6 @@
 import { Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Footer from '../components/Footer';
 import { allBlogsStyles as styles } from '../styles/allBlogsStyles';
 
 export default function ProfileScreen() {
@@ -11,7 +12,10 @@ export default function ProfileScreen() {
       </View>
       <View style={styles.content}>
         <Text style={styles.welcomeText}>Browse all Blogs</Text>
-      </View>   
+      </View>
+      <SafeAreaView edges={['bottom']}>
+          <Footer />
+      </SafeAreaView>   
     </SafeAreaView>
   );
 }

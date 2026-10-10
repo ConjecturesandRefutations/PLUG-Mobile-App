@@ -1,5 +1,6 @@
 import { Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Footer from '../components/Footer';
 import { indexStyles as styles } from '../styles/indexStyles';
 
 export default function FeedScreen() {
@@ -11,7 +12,10 @@ export default function FeedScreen() {
       </View>
       <View style={styles.content}>
         <Text style={styles.welcomeText}>Welcome to your main feed!</Text>
-      </View>   
+      </View>
+      <SafeAreaView edges={['bottom']}>
+          <Footer />
+      </SafeAreaView>   
     </SafeAreaView>
   );
 }
