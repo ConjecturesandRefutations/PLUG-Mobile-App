@@ -37,10 +37,19 @@ container: {
     alignItems: 'center',
     marginBottom: 10,
   },
-  bioLinkText: {
+  bioContainer: {
+    marginVertical: 6,
+    paddingRight: 8,
+  },
+  bioText: {
     fontSize: 16,
+    color: '#333333',
+    fontStyle: 'italic',
+    lineHeight: 22,
+  },
+  noBioText: {
     color: '#28a745',
-    marginRight: 4,
+    fontStyle: 'normal',
     textDecorationLine: 'underline',
   },
   friendsText: {
@@ -112,6 +121,13 @@ container: {
     textAlign: 'center',
     textDecorationLine: 'underline',
   },
+  removeAvatarText: {
+  fontSize: 14,
+  color: '#dc3545', // Red color matching web layout
+  textAlign: 'center',
+  marginTop: 8,
+  textDecorationLine: 'underline',
+  },
 
   /* Blogs Section */
   blogsSection: {
@@ -168,4 +184,41 @@ container: {
   footerSafeArea: {
     marginTop: 20,
   },
+  addFriendBtn: {
+    backgroundColor: '#70c18c', // Green for 'Add friend +'
+  },
+  requestedBtn: {
+    backgroundColor: '#f3b14e', // Orange for 'Requested ⌛'
+  },
+  friendsBtn: {
+    backgroundColor: '#e06666', // Red/Coral for 'Friends ✓'
+  },
+  blogCard: {
+  backgroundColor: '#ffffff',
+  borderRadius: 5,
+  paddingVertical: 24,
+  paddingHorizontal: 20,
+  marginBottom: 16,
+  alignItems: 'center',
+  borderWidth: 1,
+  borderColor: '#e8e8e8',
+  shadowColor: '#000000',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.06,
+  shadowRadius: 6,
+  elevation: 2,
+},
+blogTitleText: {
+  fontSize: 22,
+  fontWeight: '700',
+  color: '#333333',
+  textAlign: 'center',
+  marginBottom: 10,
+},
+blogMetaText: {
+  fontSize: 15,
+  color: '#555555',
+  textAlign: 'center',
+  lineHeight: 22,
+},
 });
